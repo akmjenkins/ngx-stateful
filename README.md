@@ -1,3 +1,10 @@
+# ngx-stateful
+
+[![npm version](https://img.shields.io/npm/v/ngx-stateful.svg)](https://npmjs.org/package/ngx-stateful)
+[![Coverage Status](https://coveralls.io/repos/github/akmjenkins/ngx-stateful/badge.svg)](https://coveralls.io/github/akmjenkins/ngx-stateful)
+[![Build Status](https://travis-ci.com/akmjenkins/ngx-stateful.svg)](https://travis-ci.com/akmjenkins/ngx-stateful)
+[![Bundle Phobia](https://badgen.net/bundlephobia/minzip/ngx-stateful)](https://bundlephobia.com/result?p=ngx-stateful)
+
 ## Why Stateful?
 
 First of all, you don't need this package, it's completely trivial to implement yourself (maybe angular should implement it in core?)

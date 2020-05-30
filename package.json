@@ -6,6 +6,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/akmjenkins/ngx-stateful"    
+  },
   "scripts": {
     "prepublishOnly": "yarn test && yarn build",
     "build": "rimraf build && rollup -c",
