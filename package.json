@@ -1,0 +1,36 @@
+{
+  "name": "ngx-stateful",
+  "version": "1.0.0",
+  "description": "A simple stateful angular component",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "yarn test && yarn build",
+    "build": "rimraf build && rollup -c",
+    "lint": "eslint src",
+    "test:ci": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test": "jest"
+  },
+  "author": "Adam Jenkins",
+  "license": "ISC",
+  "peerDependencies": {
+    "rxjs": "^6.5.5"
+  },
+  "devDependencies": {
+    "rxjs": "^6.5.5",
+    "coveralls": "^3.0.9",
+    "jest": "^25.1.0",
+    "prettier": "^1.18.2",
+    "rollup": "^1.21.4",
+    "@types/jest": "^25.2.1",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-jest": "^25.3.1",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-origin-ordered-imports-rule": "^1.2.2",
+    "typescript": "^3.6.4",
+    "rollup-plugin-commonjs": "^10.1.0"    
+  }
+}

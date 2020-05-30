@@ -1,0 +1,35 @@
+{
+    "extends": [
+      "tslint:recommended",
+      "tslint-config-prettier"
+    ],
+    "jsRules": {},
+    "rules": {
+      "quotemark": [true, "single"],
+      "no-construct": true,
+      "curly": [true, "as-needed"],
+      "no-debugger": true,
+      "no-duplicate-variable": true,
+      "no-empty": false,
+      "no-empty-interface": true,
+      "no-eval": true,
+      "no-inferrable-types": [true, "ignore-params"],
+      "no-shadowed-variable": true,
+      "no-string-literal": false,
+      "no-string-throw": true,
+      "no-switch-case-fall-through": true,
+      "no-trailing-whitespace": true,
+      "no-unused-expression": true,
+      "no-var-keyword": true,
+      "object-literal-sort-keys": false,
+      "prefer-const": true,
+      "radix": true,
+      "semicolon": [true, "always"],
+      "origin-ordered-imports": [true],
+      "interface-name": false,
+      "variable-name": false,
+      "trailing-comma": [true, { "multiline": "always", "singleline": "never" }],
+      "member-ordering": false
+    },
+    "rulesDirectory": ["node_modules/tslint-origin-ordered-imports-rule/dist"]
+  }
