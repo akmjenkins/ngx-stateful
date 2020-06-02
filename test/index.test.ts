@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs';
-import { StatefulComponent } from '../src/index';
+import { createSelector } from 'reselect';
+import { map } from 'rxjs/operators';
+import { StatefulComponent, StateSetter } from '../src/index';
 import { tick } from '../test.utils';
 
-jest.useFakeTimers();
+
 
 interface MyState {
     fetching: boolean;
@@ -12,12 +13,12 @@ interface MyState {
 
 class Fixture extends StatefulComponent<MyState> {
 
-    public myOnChange$: Observable<[MyState,MyState]>;
+    public fetching$ = this.selectKey<MyState['error']>('fetching');
+    public error$ = this.selectKey<MyState['error']>('error');
+    public data$ = this.selectKey<MyState['data']>('data');
 
     constructor(state: MyState) {
         super(state);
-        // onChange is protected - this little hack let's me test it
-        this.myOnChange$ = this.onChange$;
     }
 
     public async partialFetcher(data: Promise<string[]>) {
@@ -44,76 +45,96 @@ class Fixture extends StatefulComponent<MyState> {
 
         this.setState(state => ({...state,fetching:false}));
     }
+
+    public fakeSetState(state: StateSetter<MyState>) {
+        this.setState(state);
+    }
 }
 
 describe('stateful',() => {
+    const initialState = {
+        fetching:false,
+        data:[],
+        error: false,
+    };
+    let instance: Fixture;
+    beforeEach(() => {
+        instance = new Fixture(initialState);
+    });
 
     it('should work',() => {
-        const initialState = {
-            fetching:false,
-            data:[],
-            error: false,
-        };
-
-        const fixture = new Fixture(initialState);
-        expect(fixture.state).toEqual(initialState);
+        expect(instance.state).toEqual(initialState);
     });
 
     it('should update state (with a partial)',async () => {
-        const initialState = {
-            fetching:false,
-            data:[],
-            error: false,
-        };
-
-        const fixture = new Fixture(initialState);
         const data = ['one','two','three'];
-        fixture.partialFetcher(new Promise(res => res(data)));
-        expect(fixture.state.fetching).toBe(true);
-        expect(fixture.state.data).not.toBe(data);
+        instance.partialFetcher(new Promise(res => res(data)));
+        expect(instance.state.fetching).toBe(true);
+        expect(instance.state.data).not.toBe(data);
         await tick();
-        expect(fixture.state.fetching).toBe(false);
-        expect(fixture.state.data).toBe(data);
+        expect(instance.state.fetching).toBe(false);
+        expect(instance.state.data).toBe(data);
 
     });
 
     it('should update state (with a function)',async () => {
-        const initialState = {
-            fetching:false,
-            data:[],
-            error: false,
-        };
-
-        const fixture = new Fixture(initialState);
         const data = ['one','two','three'];
-        fixture.fnFetcher(new Promise(res => res(data)));
-        expect(fixture.state.fetching).toBe(true);
-        expect(fixture.state.data).not.toBe(data);
+        instance.fnFetcher(new Promise(res => res(data)));
+        expect(instance.state.fetching).toBe(true);
+        expect(instance.state.data).not.toBe(data);
         await tick();
-        expect(fixture.state.fetching).toBe(false);
-        expect(fixture.state.data).toBe(data);
+        expect(instance.state.fetching).toBe(false);
+        expect(instance.state.data).toBe(data);
 
     });
 
-    it('should call onChange correctly', async () => {
-        const initialState = {
-            fetching:false,
-            data:[],
-            error: false,
-        };
-
-        const fixture = new Fixture(initialState);
+    it('should work with a selector',() => {
+        const selector = createSelector((state: MyState) => state,({fetching}) => fetching);
+        const pipe = map(({fetching}) => fetching);
         const spy = jest.fn();
-        fixture.myOnChange$.subscribe(spy);
-        expect(spy).not.toHaveBeenCalled();
-        const data = ['one','two','three'];
-        fixture.partialFetcher(new Promise(res => res(data)));
-        const firstState = {...initialState,fetching:true};
-        expect(spy).toHaveBeenCalledWith([initialState,firstState]);
+        const spyWithoutSelector = jest.fn();
+        instance.state$.pipe(pipe).subscribe(spyWithoutSelector);
+        instance.select(selector).subscribe(spy);
+
+        expect(spyWithoutSelector).toHaveBeenCalledTimes(1);
+        expect(spyWithoutSelector).toHaveBeenCalledWith(false);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(false);
         spy.mockClear();
-        await tick();
-        const secondState = {...firstState,data};
-        expect(spy).toHaveBeenCalledWith([firstState,secondState]);
+        spyWithoutSelector.mockClear();
+        instance.fakeSetState({error:true});
+        expect(spy).toHaveBeenCalledTimes(0);
+        expect(spyWithoutSelector).toHaveBeenCalledTimes(1);
     });
+
+    it('should work with a key selector',() => {
+        const pipe = map(({fetching}) => fetching);
+        const spy = jest.fn();
+        const spyWithoutSelector = jest.fn();
+        instance.state$.pipe(pipe).subscribe(spyWithoutSelector);
+        instance.selectKey<boolean>('fetching').subscribe(spy);
+
+        expect(spyWithoutSelector).toHaveBeenCalledTimes(1);
+        expect(spyWithoutSelector).toHaveBeenCalledWith(false);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(false);
+        spy.mockClear();
+        spyWithoutSelector.mockClear();
+        instance.fakeSetState({error:true});
+        expect(spy).toHaveBeenCalledTimes(0);
+        expect(spyWithoutSelector).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call onChange',() => {
+        const spy = jest.fn();
+        instance.onKeyChange('fetching').subscribe(spy);
+        expect(spy).not.toHaveBeenCalled();
+        instance.fakeSetState({error:true});
+        expect(spy).not.toHaveBeenCalled();
+        instance.fakeSetState({fetching:true});
+        expect(spy).toHaveBeenCalledWith([initialState.fetching,true]);
+    });
+
+
 
 });

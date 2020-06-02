@@ -1,25 +1,36 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { pairwise } from 'rxjs/operators';
+import { distinctUntilChanged, map, pairwise, startWith } from 'rxjs/operators';
 
 type StateSetterFunction<T> = (state: T) => T;
-type StateSetter<T> = Partial<T> | StateSetterFunction<T>;
-
+export type StateSetter<T> = Partial<T> | StateSetterFunction<T>;
 export abstract class StatefulComponent<T> {
 
   private _state: BehaviorSubject<T>;
   public state$: Observable<T>;
 
-  // does this even make sense?
   public get state(): T {
     return this._state.value;
   }
 
-  protected onChange$: Observable<[T,T]>;
+  public select<R>(selector: (state: T) => R) {
+    return this.state$.pipe(map(selector),distinctUntilChanged());
+  }
+
+  public selectKey<R>(key: string) {
+    return this.select<R>(state => state[key]);
+  }
+
+  public onChange<R>(selector: (state: T) => R) {
+    return this.select<R>(selector).pipe(pairwise());
+  }
+
+  public onKeyChange<R>(key: string) {
+    return this.onChange<R>((state: T) => state[key]);
+  }
 
   constructor(_state: T) {
     this._state = new BehaviorSubject(_state);
     this.state$ = this._state.asObservable();
-    this.onChange$ = this.state$.pipe(pairwise());
   }
 
   protected setState(state: StateSetter<T>) {

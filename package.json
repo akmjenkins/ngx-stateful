@@ -1,14 +1,17 @@
 {
   "name": "ngx-stateful",
-  "version": "1.0.0",
-  "description": "A simple stateful angular component",
+  "version": "1.1.0",
+  "description": "Be obnoxiously clear about which of your Angular components own state",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
+  "bugs": {
+    "url": "https://github.com/akmjenkins/ngx-stateful/issues"
+  },  
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/akmjenkins/ngx-stateful"    
+    "type": "git",
+    "url": "https://github.com/akmjenkins/ngx-stateful"
   },
   "scripts": {
     "prepublishOnly": "yarn test && yarn build",
@@ -23,18 +26,19 @@
     "rxjs": "^6.5.5"
   },
   "devDependencies": {
-    "rxjs": "^6.5.5",
+    "@types/jest": "^25.2.1",
     "coveralls": "^3.0.9",
     "jest": "^25.1.0",
     "prettier": "^1.18.2",
+    "reselect": "^4.0.0",
     "rollup": "^1.21.4",
-    "@types/jest": "^25.2.1",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-typescript2": "^0.24.3",
+    "rxjs": "^6.5.5",
     "ts-jest": "^25.3.1",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-origin-ordered-imports-rule": "^1.2.2",
-    "typescript": "^3.6.4",
-    "rollup-plugin-commonjs": "^10.1.0"    
+    "typescript": "^3.6.4"
   }
 }
