@@ -1,6 +1,6 @@
 {
   "name": "ngx-stateful",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Be obnoxiously clear about which of your Angular components own state",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
