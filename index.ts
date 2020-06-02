@@ -5,8 +5,8 @@ type StateSetterFunction<T> = (state: T) => T;
 export type StateSetter<T> = Partial<T> | StateSetterFunction<T>;
 export abstract class StatefulComponent<T> {
 
-  private _state: BehaviorSubject<T>;
-  public state$: Observable<T>;
+  private _state: BehaviorSubject<T> = new BehaviorSubject(null);
+  public state$: Observable<T> = this._state.asObservable();
 
   public get state(): T {
     return this._state.value;
@@ -29,8 +29,7 @@ export abstract class StatefulComponent<T> {
   }
 
   constructor(_state: T) {
-    this._state = new BehaviorSubject(_state);
-    this.state$ = this._state.asObservable();
+    this.setState(_state);
   }
 
   protected setState(state: StateSetter<T>) {

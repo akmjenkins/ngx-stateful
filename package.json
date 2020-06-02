@@ -1,11 +1,20 @@
 {
   "name": "ngx-stateful",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Be obnoxiously clear about which of your Angular components own state",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "angular",
+    "components",
+    "state",
+    "state-management",
+    "redux",
+    "stateless-components",
+    "stateful-components"
   ],
   "bugs": {
     "url": "https://github.com/akmjenkins/ngx-stateful/issues"

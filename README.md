@@ -11,7 +11,7 @@
 
 ## Why Stateful?
 
-First of all, you probably don't need this package, it's completely trivial to implement yourself using a [stateSubject](https://www.bennadel.com/blog/3522-creating-a-simple-setstate-store-using-an-rxjs-behaviorsubject-in-angular-6-1-10.htm). It looks like [ngrx has tried to do this](https://ngrx.io/guide/component-store) but (unpopular opinion ahead) dependency injection in Angular is not the way to go. Not because DI is inherently bad, but because most developers just don't use it for it's intended purpose. Instead of relying on abstract dependencies and "programming to the interface", it's used simply to share state around various services in the application in weird ways that are hard to debug.
+First of all, you probably don't need this package, it's completely trivial to implement yourself using a [StateSubject](https://www.bennadel.com/blog/3522-creating-a-simple-setstate-store-using-an-rxjs-behaviorsubject-in-angular-6-1-10.htm). It looks like [ngrx has tried to do this](https://ngrx.io/guide/component-store) but they've failed to [KISS](https://en.wikipedia.org/wiki/KISS_principle). Plus (unpopular opinion ahead) dependency injection in Angular is not the way to go. Not because DI is inherently bad, but because most developers just don't use it for it's intended purpose. Instead of relying on abstract dependencies and "programming to the interface", it's used simply to share state around various services in the application in weird ways that are hard to debug.
 
 Secondly, just because your application uses state (spoiler alert: every application has state), doesn't mean it needs all the boilerplate of a [redux implementation](https://ngrx.io/guide/store).
 
