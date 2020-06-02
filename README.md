@@ -30,7 +30,7 @@ It provides some neat helper methods that make it easy to discern when and why s
 
 ## How to use
 
-```
+```js
 import { StatefulComponent } from 'ngx-stateful';
 
 interface MyState {
@@ -94,7 +94,7 @@ export class MyComponent extends StatefulComponent<MyState> implements ngOnInit 
 
 Any component class that extends this must call `super()` with the state:
 
-```
+```js
 class MyComponent extends StatefulComponent<MyState> {
     constructor() {
         super({...your state})
@@ -116,7 +116,7 @@ An observable of your components state, think [async pipe](https://angular.io/ap
 
 Sets the state of the component by either patching it or using the function signature.
 
-```
+```js
 private startFetching() {
     // patch function signature
     this.setState({fetching:true});
@@ -133,14 +133,14 @@ private stopFetching() {
 
 Retrieve state with a selector (see [reselect](https://github.com/reduxjs/reselect)).
 
-```
+```js
 public fetching$ = this.select(state => state,({fetching}) => fetching);
 ```
 <a name="selectkey"></a>
 - `public selectKey<R>(key: string): Observable<R>`
 
 Retrieve state by string key (when your state is an object).
-```
+```js
 public fetching$ = this.selectKey<boolean>('fetching');
 ```
 
