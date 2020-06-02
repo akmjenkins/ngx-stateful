@@ -5,6 +5,10 @@
 [![Build Status](https://travis-ci.com/akmjenkins/ngx-stateful.svg)](https://travis-ci.com/akmjenkins/ngx-stateful)
 [![Bundle Phobia](https://badgen.net/bundlephobia/minzip/ngx-stateful)](https://bundlephobia.com/result?p=ngx-stateful)
 
+## Sample App 
+
+[Simple Stackblitz App](https://stackblitz.com/edit/angular-ivy-k47m7k) (it's not a "ToDo") to show you how **ngx-stateful** works.
+
 ## Why Stateful?
 
 First of all, you probably don't need this package, it's completely trivial to implement yourself using a [stateSubject](https://www.bennadel.com/blog/3522-creating-a-simple-setstate-store-using-an-rxjs-behaviorsubject-in-angular-6-1-10.htm). It looks like [ngrx has tried to do this](https://ngrx.io/guide/component-store) but (unpopular opinion ahead) dependency injection in Angular is not the way to go. Not because DI is inherently bad, but because most developers just don't use it for it's intended purpose. Instead of relying on abstract dependencies and "programming to the interface", it's used simply to share state around various services in the application in weird ways that are hard to debug.
