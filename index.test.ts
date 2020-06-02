@@ -1,8 +1,11 @@
 import { createSelector } from 'reselect';
 import { map } from 'rxjs/operators';
-import { StatefulComponent, StateSetter } from '../src/index';
-import { tick } from '../test.utils';
+import { StatefulComponent, StateSetter } from './index';
 
+jest.useFakeTimers();
+
+// https://github.com/facebook/jest/issues/2157#issuecomment-279171856
+export const tick = () => new Promise(res => setImmediate(res));
 
 
 interface MyState {

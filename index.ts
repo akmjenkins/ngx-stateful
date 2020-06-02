@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map, pairwise, startWith } from 'rxjs/operators';
+import { distinctUntilChanged, map, pairwise } from 'rxjs/operators';
 
 type StateSetterFunction<T> = (state: T) => T;
 export type StateSetter<T> = Partial<T> | StateSetterFunction<T>;

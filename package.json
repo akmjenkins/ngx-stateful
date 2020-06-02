@@ -8,14 +8,14 @@
   ],
   "bugs": {
     "url": "https://github.com/akmjenkins/ngx-stateful/issues"
-  },  
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/akmjenkins/ngx-stateful"
   },
   "scripts": {
     "prepublishOnly": "yarn test && yarn build",
-    "build": "rimraf build && rollup -c",
+    "build": "rimraf dist && tsc",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test:ci": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest"
@@ -31,9 +31,6 @@
     "jest": "^25.1.0",
     "prettier": "^1.18.2",
     "reselect": "^4.0.0",
-    "rollup": "^1.21.4",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-typescript2": "^0.24.3",
     "rxjs": "^6.5.5",
     "ts-jest": "^25.3.1",
     "tslint": "^5.20.0",

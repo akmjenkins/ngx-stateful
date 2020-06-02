@@ -1,6 +1,5 @@
 module.exports = {
     transform: { '^.+\\.ts?$': 'ts-jest' },
-    coveragePathIgnorePatterns:['test/test.utils.js'],
     coverageThreshold: {
       global: {
         branches: 90,
